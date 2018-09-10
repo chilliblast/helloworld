@@ -1,13 +1,15 @@
 #!groovy 
 
 node {
-   tools {nodejs "NodeJS NodeJS 4.4.5"}
+   wrappers {
+   	nodejs('NodeJS 4.4.5')
+  }
    stage 'Checkout'
         checkout scm
 
-   stage 'Setup'
-	sh 'npm config set registry http://registry.npmjs.org/'
-        sh 'npm install'
+#   stage 'Setup'
+#	sh 'npm config set registry http://registry.npmjs.org/'
+#        sh 'npm install'
 
    stage 'Mocha test'
         sh './node_modules/mocha/bin/mocha'
