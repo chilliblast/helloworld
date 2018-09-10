@@ -9,6 +9,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+		sh 'npm config set registry http://registry.npmjs.org/'
+		sh 'npm install'
             }
         }
         stage('Test') {
