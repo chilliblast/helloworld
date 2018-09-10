@@ -1,6 +1,7 @@
 #!groovy 
 
 node {
+   tools {nodejs "NodeJS NodeJS 4.4.5"}
    stage 'Checkout'
         checkout scm
 
