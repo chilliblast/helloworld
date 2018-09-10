@@ -1,17 +1,33 @@
 #!groovy 
 
-node {
-   wrappers {
-   	nodejs('NodeJS 4.4.5')
-  }
-   stage 'Checkout'
-        checkout scm
+pipeline {
+    agent any
 
-   stage 'Mocha test'
-        sh './node_modules/mocha/bin/mocha'
+    tools {nodejs "NodeJS 4.4.5"}
 
-   stage 'Cleanup'
-        echo 'prune and cleanup'
-        sh 'npm prune'
-        sh 'rm node_modules -rf'
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Mocha Testing..'
+		sh './node_modules/mocha/bin/mocha'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+	stage('Cleanup') {
+	    steps {
+                echo 'Cleaning up....'
+		sh 'npm prune'
+		sh 'rm node_modules -rf'
+            }   
+        }
+    }
 }
