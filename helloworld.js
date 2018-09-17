@@ -1,4 +1,20 @@
 var http = require("http")
+var winston = require("winston")
+var version = process.env.HELLOWORLD_VERSION
+
+var logger = winston.createLogger({ 
+  transports: [new winston.transports.Console({ 
+    timestamp: function() { 
+       var d = new Date()
+       return d.toISOString()
+    }, 
+  })] 
+}) 
+
+logger.rewriters.push(function(level, msg, meta) { 
+  meta.version = version 
+  return meta 
+}) 
 
 http.createServer(function (request, response) {
 
@@ -12,4 +28,7 @@ http.createServer(function (request, response) {
 }).listen(3000)
 
 // Console will print the message
-console.log('Server running')
+// console.log('Server running')
+
+// Utilise logger
+logger.info("Server running")
